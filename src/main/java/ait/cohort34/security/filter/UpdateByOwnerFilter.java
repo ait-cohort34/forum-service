@@ -30,6 +30,8 @@ public class UpdateByOwnerFilter implements Filter {
     }
 
     private boolean checkEndpoint(String method, String path) {
-        return HttpMethod.PUT.matches(method) && path.matches("/account/user/\\w+");
+        return (HttpMethod.PUT.matches(method) && path.matches("/account/user/\\w+"))
+                || (HttpMethod.POST.matches(method) && path.matches("/forum/post/\\w+"))
+                || (HttpMethod.PUT.matches(method) && path.matches("/forum/post/\\w+/comment/\\w+"));
     }
 }
