@@ -7,6 +7,7 @@ import ait.cohort34.accounting.dto.UserRegisterDto;
 import ait.cohort34.accounting.service.UserAccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -23,8 +24,8 @@ public class UserAccountController {
     }
 
     @PostMapping("/login")
-    public UserDto login(Principal principal) {
-        return userAccountService.getUser(principal.getName());
+    public UserDto login(Authentication authentication) {
+        return userAccountService.getUser(authentication.getName());
     }
 
     @GetMapping("/user/{login}")
