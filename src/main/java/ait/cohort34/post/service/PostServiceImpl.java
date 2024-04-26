@@ -8,7 +8,9 @@ import ait.cohort34.post.dto.PostDto;
 import ait.cohort34.post.dto.exceptions.PostNotFoundException;
 import ait.cohort34.post.model.Comment;
 import ait.cohort34.post.model.Post;
+import ait.cohort34.post.service.logging.PostLogger;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +44,7 @@ public class PostServiceImpl implements PostService {
         return modelMapper.map(post, PostDto.class);
     }
 
+    @PostLogger
     @Override
     public PostDto updatePost(String id, NewPostDto newPostDto) {
         Post post = postRepository.findById(id).orElseThrow(PostNotFoundException::new);
@@ -61,6 +64,7 @@ public class PostServiceImpl implements PostService {
         return modelMapper.map(post, PostDto.class);
     }
 
+    @PostLogger(enabled = false)
     @Override
     public PostDto addComment(String id, String author, NewCommentDto newCommentDto) {
         Post post = postRepository.findById(id).orElseThrow(PostNotFoundException::new);
@@ -70,6 +74,7 @@ public class PostServiceImpl implements PostService {
         return modelMapper.map(post, PostDto.class);
     }
 
+    @PostLogger
     @Override
     public void addLike(String id) {
         Post post = postRepository.findById(id).orElseThrow(PostNotFoundException::new);
